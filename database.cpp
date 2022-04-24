@@ -72,7 +72,7 @@ void Database::createTables(){
 
     }
 
-    if (query.exec("CREATE TABLE IF NOT EXISTS movieScreen (id int NOT NULL AUTO_INCREMENT, screenID int, title VARCHAR(255), showtime TIME, PRIMARY KEY (id));")){
+    if (query.exec("CREATE TABLE IF NOT EXISTS movieScreen (id int NOT NULL AUTO_INCREMENT, screenID int, title VARCHAR(255), showtime TIME, FOREIGN KEY(screenID) REFERENCES screens(screenID), PRIMARY KEY (id));")){
         qDebug() << "Table movieScreen created!";
         query.exec("TRUNCATE TABLE movieScreen");
         query.exec("INSERT INTO movieScreen (screenID, title, showtime) VALUES (1, 'The Batman', '21:00:00'), (1, 'The Batman', '17:00:00'), (3, 'Hunt for the Wilderpeople', '11:30:00'), (2, 'American Psycho', '21:30:00'), (1, 'Interstellar', '12:30:00'), (2, 'Moonfall', '13:30:00');");

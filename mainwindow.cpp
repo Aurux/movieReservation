@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "database.h"
 #include <QSqlQueryModel>
+#include <QSqlQuery>
 #include <QSqlRecord>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -35,6 +36,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_movieTableView_clicked(const QModelIndex &index)
 {
+    QString query;
+    query = "SELECT screenID, showtime FROM movieScreen WHERE title='" + index.data().toString() + "';";
+    qDebug() << query;
+    QSqlQueryModel * showTimeModel = new QSqlQueryModel();
+    showTimeModel->setQuery(query);
+    showTimeModel->setHeaderData(0, Qt::Horizontal, tr("Screen"));
+    showTimeModel->setHeaderData(1, Qt::Horizontal, tr("Showtime"));
+
+
+    ui->screenTableView->setModel(showTimeModel);
 
 }
 

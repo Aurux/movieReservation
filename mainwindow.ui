@@ -23,7 +23,7 @@
      <rect>
       <x>20</x>
       <y>0</y>
-      <width>258</width>
+      <width>311</width>
       <height>215</height>
      </rect>
     </property>
@@ -46,6 +46,12 @@
        <property name="sortingEnabled">
         <bool>false</bool>
        </property>
+       <attribute name="horizontalHeaderVisible">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="horizontalHeaderCascadingSectionResizes">
+        <bool>true</bool>
+       </attribute>
        <attribute name="verticalHeaderVisible">
         <bool>false</bool>
        </attribute>
@@ -56,9 +62,9 @@
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>340</x>
       <y>0</y>
-      <width>258</width>
+      <width>211</width>
       <height>215</height>
      </rect>
     </property>
@@ -71,7 +77,20 @@
       </widget>
      </item>
      <item>
-      <widget class="QTableView" name="screenTableView"/>
+      <widget class="QTableView" name="screenTableView">
+       <property name="showGrid">
+        <bool>false</bool>
+       </property>
+       <attribute name="horizontalHeaderCascadingSectionResizes">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderHighlightSections">
+        <bool>false</bool>
+       </attribute>
+      </widget>
      </item>
     </layout>
    </widget>
