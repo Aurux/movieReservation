@@ -11,11 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Movie Reservation</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../../../../../Downloads/film-reel.png</normaloff>../../../../../../Downloads/film-reel.png</iconset>
+   <iconset resource="icon.qrc">
+    <normaloff>:/new/icon/images/film-reel.png</normaloff>:/new/icon/images/film-reel.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="">
@@ -112,6 +112,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="icon.qrc"/>
+ </resources>
  <connections/>
 </ui>
