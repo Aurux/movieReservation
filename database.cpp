@@ -83,6 +83,18 @@ void Database::createTables(){
         qDebug() << "Table movieScreen failed to create: " << query.lastError().text();
 
     }
+
+    if (query.exec("CREATE TABLE IF NOT EXISTS seats (id int NOT NULL AUTO_INCREMENT, row char, column int, screenID TIME, FOREIGN KEY(screenID) REFERENCES screens(screenID), PRIMARY KEY (id));")){
+        qDebug() << "Table seats created!";
+        query.exec("TRUNCATE TABLE seats");
+
+
+    }
+    else {
+
+        qDebug() << "Table seats failed to create: " << query.lastError().text();
+
+    }
 }
 
 
