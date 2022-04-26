@@ -21,6 +21,8 @@ private slots:
 
     void on_movieTableView_clicked(const QModelIndex &index);
 
+    void on_screenTableView_clicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
 };

@@ -51,7 +51,7 @@ void Database::createTables(){
     if (query.exec("CREATE TABLE IF NOT EXISTS screens (screenID int NOT NULL AUTO_INCREMENT, totalSeats int, PRIMARY KEY (screenID));")){
         qDebug() << "Table screens created!";
         query.exec("TRUNCATE TABLE screens");
-        query.exec("INSERT INTO screens (totalSeats) VALUES (100),(150),(192);");
+        query.exec("INSERT INTO screens (totalSeats) VALUES (208),(160),(80);");
         qDebug() << "Failed to insert screens: " << query.lastError().text();
     }
     else {
@@ -84,7 +84,7 @@ void Database::createTables(){
 
     }
 
-    if (query.exec("CREATE TABLE IF NOT EXISTS seats (id int NOT NULL AUTO_INCREMENT, row char, column int, screenID TIME, FOREIGN KEY(screenID) REFERENCES screens(screenID), PRIMARY KEY (id));")){
+    if (query.exec("CREATE TABLE IF NOT EXISTS seats (id int NOT NULL AUTO_INCREMENT, row CHAR(1), column int, screenID int, FOREIGN KEY(screenID) REFERENCES screens(screenID), PRIMARY KEY (id));")){
         qDebug() << "Table seats created!";
         query.exec("TRUNCATE TABLE seats");
 
