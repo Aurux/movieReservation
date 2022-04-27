@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>800</height>
+    <height>850</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,7 +38,7 @@
      <item>
       <widget class="QTableView" name="movieTableView">
        <property name="styleSheet">
-        <string notr="true">text-align: center;</string>
+        <string notr="true"/>
        </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectRows</enum>
@@ -50,7 +50,7 @@
         <bool>false</bool>
        </property>
        <property name="cornerButtonEnabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <attribute name="horizontalHeaderVisible">
         <bool>true</bool>
@@ -86,6 +86,9 @@
     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
      <item>
       <widget class="QLabel" name="showingLabel">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>100</horstretch>
@@ -105,6 +108,9 @@
      </item>
      <item>
       <widget class="QTableView" name="screenTableView">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectRows</enum>
        </property>
@@ -146,6 +152,9 @@
     </layout>
    </widget>
    <widget class="QLabel" name="seatLabel">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -157,6 +166,51 @@
     <property name="text">
      <string>Screen:</string>
     </property>
+   </widget>
+   <widget class="QLabel" name="imageLabel">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>10</y>
+      <width>200</width>
+      <height>200</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>770</y>
+      <width>241</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="selectedLabel">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Seats selected:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="reserveButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Reserve Seats</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

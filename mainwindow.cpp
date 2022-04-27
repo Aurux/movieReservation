@@ -1,10 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "database.h"
-#include <QSqlQueryModel>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QPushButton>
+#include <QDir>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -22,6 +18,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->movieTableView->setColumnWidth((movieModel->columnCount() -1), 100);
     ui->movieTableView->setSelectionMode( QAbstractItemView::SingleSelection );
     ui->movieTableView->setModel(movieModel);
+
+    qDebug() << "Current dir:" << QDir::currentPath();
+
+
+    QPixmap pic(":/new/icon/images/film-reel.png");
+    ui->imageLabel->setPixmap(pic);
+    ui->imageLabel->setScaledContents(true);
 
 }
 
@@ -51,6 +54,8 @@ void MainWindow::on_movieTableView_clicked(const QModelIndex &index)
         ui->showingLabel->adjustSize();
         ui->verticalLayout_2->addStretch(1);
         ui->screenTableView->setModel(showTimeModel);
+        ui->showingLabel->setEnabled(true);
+        ui->screenTableView->setEnabled(true);
        }
 
 }
@@ -72,17 +77,38 @@ void clearLayout(QLayout *layout) {
     }
 }
 
+int selectedSeats = 0;
+void MainWindow::selectSeat(QString position) {
+    QStringList query = position.split(",");
+    qDebug() << "Button pushed at: " << query.at(0).toInt() << "," << query.at(1).toInt() << " Screen: " << query.at(2).toInt() << "Seat: " << query.at(3);
+    selectedSeats += 1;
+    ui->selectedLabel->setText("Selected seats: " + QString::number(selectedSeats));
+}
+
+
+
 void MainWindow::on_screenTableView_clicked(const QModelIndex &index)
 {
     if (index.column() == 0){
-        clearLayout(ui->seatGridLayout);
+        ui->selectedLabel->setEnabled(true);
+        ui->reserveButton->setEnabled(true);
+        ui->seatLabel->setEnabled(true);
+        clearLayout(ui->seatGridLayout); // Make sure seat grid is clear.
         ui->seatLabel->setText("Screen: " + index.data().toString());
+        QSignalMapper *signalMapper = new QSignalMapper(ui->seatGridLayout);
+
         QSqlQuery query;
+
+
         query.exec("SELECT totalSeats FROM screens WHERE screenID='" + index.data().toString() + "';");
         int rows = 0;
         int columns = 16;
 
+
         if (query.next()) {
+            if (query.value(0).toInt() < 100) {
+                columns = 8;
+            }
             rows = query.value(0).toInt() / columns;
         }
 
@@ -94,16 +120,25 @@ void MainWindow::on_screenTableView_clicked(const QModelIndex &index)
         for (int i = 0; i < rows; i++){
             int colNum = 1;
             for (int j = 0; j < columns; j++){
+                // Generate seat button
                 QPushButton * button = new QPushButton(this);
-                qDebug() << "Making seat: " << rowChars[i] << QString::number(j + 1);
-                button->setText(rowChars[i] + QString::number(j + 1));
+                QString buttonText = rowChars[i] + QString::number(j + 1);
+                button->setText(buttonText);
                 button->setCheckable(true);
                 ui->seatGridLayout->addWidget(button, i, j);
+
+                QString args= QString("%1,%2,%3,%4").arg(i).arg(j).arg(index.data().toString()).arg(buttonText);
+                connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
+                signalMapper->setMapping(button, args);
+
                 colNum++;
             }
 
         }
 
+        connect(signalMapper, SIGNAL(mappedString(QString)), this, SLOT(selectSeat(QString)));
+
     }
 }
+
 
