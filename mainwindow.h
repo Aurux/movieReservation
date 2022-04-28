@@ -32,6 +32,8 @@ private slots:
 
     void on_screenTableView_clicked(const QModelIndex &index);
 
+    void on_reserveButton_clicked();
+
 private:
     QSignalMapper *signalMapper;
     Ui::MainWindow *ui;
