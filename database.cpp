@@ -69,12 +69,12 @@ void Database::createTables(){
 
     }
 
-    if (query.exec("CREATE TABLE IF NOT EXISTS movieScreen (id int NOT NULL AUTO_INCREMENT, screenID int, title VARCHAR(255), showtime TIME, FOREIGN KEY(screenID) REFERENCES screens(screenID), PRIMARY KEY (id));")){
+    if (query.exec("CREATE TABLE IF NOT EXISTS showtimes (id int NOT NULL AUTO_INCREMENT, screenID int, title VARCHAR(255), showtime TIME, FOREIGN KEY(screenID) REFERENCES screens(screenID), PRIMARY KEY (id));")){
         qDebug() << "Table movieScreen created!";
-        query.exec("TRUNCATE TABLE movieScreen");
-        query.exec("INSERT INTO movieScreen (screenID, title, showtime) VALUES (1, 'The Batman', '21:00:00'), (1, 'The Batman', '17:00:00'), (3, 'Hunt for the Wilderpeople', '11:30:00'), (2, 'American Psycho', '21:30:00'), (1, 'Interstellar', '12:30:00'), (2, 'Moonfall', '13:30:00');");
-        qDebug() << "Failed to insert movieScreen: " << query.lastError().text();
-        query.exec("DELETE FROM movieScreen WHERE id > 6;");
+        query.exec("TRUNCATE TABLE showtimes");
+        query.exec("INSERT INTO showtimes (screenID, title, showtime) VALUES (1, 'The Batman', '21:00:00'), (1, 'The Batman', '17:00:00'), (3, 'Hunt for the Wilderpeople', '11:30:00'), (2, 'American Psycho', '21:30:00'), (1, 'Interstellar', '12:30:00'), (2, 'Moonfall', '13:30:00');");
+        qDebug() << "Failed to insert showtimes: " << query.lastError().text();
+        query.exec("DELETE FROM showtimes WHERE id > 6;");
     }
     else {
 
@@ -82,9 +82,10 @@ void Database::createTables(){
 
     }
 
-    if (query.exec("CREATE TABLE IF NOT EXISTS seats (id int NOT NULL AUTO_INCREMENT, seatName VARCHAR(3), reserved BOOLEAN, screenID int, showtimeID int, FOREIGN KEY(screenID) REFERENCES screens(screenID), FOREIGN KEY(showtimeID) REFERENCES movieScreen(id),PRIMARY KEY (id));")){
+    if (query.exec("CREATE TABLE IF NOT EXISTS seats (id int NOT NULL AUTO_INCREMENT, seatName VARCHAR(3), reserved BOOLEAN, showtimeID int, FOREIGN KEY(showtimeID) REFERENCES showtimes(id),PRIMARY KEY (id));")){
         qDebug() << "Table seats created!";
         query.exec("TRUNCATE TABLE seats");
+        query.exec("INSERT INTO seats (seatName, reserved, showtimeID) VALUES ('E5',1,1),('E6',1,1),('E7',1,1),('E8',1,1),('E9',1,1);");
 
     }
     else {
