@@ -58,6 +58,9 @@ void MainWindow::on_movieTableView_clicked(const QModelIndex &index)
         ui->showingLabel->setEnabled(true);
         ui->screenTableView->setEnabled(true);
        }
+    else {
+        MainWindow::on_movieTableView_clicked(index.siblingAtColumn(0));
+    }
 
 }
 
@@ -100,7 +103,14 @@ void MainWindow::selectSeat(QString position) {
         }
         selectedSeats -= 1;
     }
-
+    if (selectedSeats > 0){
+        ui->selectedLabel->setEnabled(true);
+        ui->reserveButton->setEnabled(true);
+    }
+    else {
+        ui->selectedLabel->setEnabled(false);
+        ui->reserveButton->setEnabled(false);
+    }
     // Update seat total.
     ui->selectedLabel->setText("Selected seats: " + QString::number(selectedSeats));
 }
@@ -110,9 +120,10 @@ void MainWindow::selectSeat(QString position) {
 void MainWindow::on_screenTableView_clicked(const QModelIndex &index)
 {
     if (index.column() == 0){
+        selectedSeats = 0;
+        selectedSeatNumbers.empty();
+        ui->selectedLabel->setText("Selected seats: " + QString::number(selectedSeats));
         // Enable seat UI
-        ui->selectedLabel->setEnabled(true);
-        ui->reserveButton->setEnabled(true);
         ui->seatLabel->setEnabled(true);
         ui->seatLabel->setText("Screen: " + index.data().toString());
 
@@ -152,10 +163,10 @@ void MainWindow::on_screenTableView_clicked(const QModelIndex &index)
                 ui->seatGridLayout->addWidget(button, i, j);
 
                 // Check if seat is already reserved.
-                query.prepare("SELECT seatName FROM seats WHERE (SELECT id FROM showtimes WHERE screenID = :screenID AND showtime = :showtime);");
-                query.bindValue(0, index.data().toString());
-                query.bindValue(1, index.siblingAtColumn(1).data().toString());
-                query.exec();
+                query.prepare("SELECT seatName FROM seats WHERE showtimeID = (SELECT id FROM showtimes WHERE screenID = :ID AND showtime = :TIME);");
+                query.bindValue(":ID",index.data().toInt());
+                query.bindValue(":TIME",index.siblingAtColumn(1).data().toString());
+                query.exec();                
 
                 while (query.next()){
                     if (query.value(0).toString() == buttonText){
@@ -176,12 +187,45 @@ void MainWindow::on_screenTableView_clicked(const QModelIndex &index)
         connect(signalMapper, SIGNAL(mappedString(QString)), this, SLOT(selectSeat(QString)));
 
     }
+    else {
+        MainWindow::on_screenTableView_clicked(index.siblingAtColumn(0));
+    }
 }
 
 
-
+int checkoutID = 1;
 void MainWindow::on_reserveButton_clicked()
 {
+    QString movie = ui->movieTableView->selectionModel()->selectedRows().at(0).data().toString();
+    int screenID = ui->screenTableView->selectionModel()->selectedRows().at(0).data().toInt();
+    QString showtime = ui->screenTableView->selectionModel()->selectedRows().at(0).siblingAtColumn(1).data().toString();
+
+    QSqlQuery query;
+    for (int i = 0; i < selectedSeatNumbers.size(); i++){
+        query.prepare("INSERT INTO seats (seatName, reserved, showtimeID) VALUES (:SEAT, 1, (SELECT id FROM showtimes WHERE title = :MOVIE AND showtime = :SHOWTIME));");
+        query.bindValue(":SEAT", selectedSeatNumbers[i]);
+        query.bindValue(":MOVIE", movie);
+        query.bindValue(":SHOWTIME", showtime);
+        query.exec();
+        qDebug() << query.lastQuery();
+    }
+
+    showtime.truncate(5);
+    QMessageBox *popup = new QMessageBox(this);
+    popup->setIconPixmap(QPixmap(":/new/icon/images/film-reel.png").scaled(128,128));
+    popup->setText(QString::number(selectedSeats) + " seats reserved for \n" + movie + "\n"
+                   + showtime +
+                   " on screen " + QString::number(screenID) +
+                   "\n\nOrder number: " + QString::number(checkoutID));
+    popup->setWindowTitle("Movie Reservation");
+    popup->show();
+
+    qDebug() << "Movie:" << movie << "Screen:" << screenID << "Showtime:" << showtime;
     qDebug() << "Selected seats:" << selectedSeatNumbers;
+
+    checkoutID++;
+
+    QList<QModelIndex> index = ui->screenTableView->selectionModel()->selectedIndexes();
+    MainWindow::on_screenTableView_clicked(index[0]);
 }
 

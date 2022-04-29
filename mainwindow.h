@@ -11,6 +11,8 @@
 #include <QPushButton>
 #include <QSignalMapper>
 #include <QPixmap>
+#include <QMessageBox>
+#include <QUuid>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
