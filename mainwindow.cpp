@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     qDebug() << "Current dir:" << QDir::currentPath();
 
-    QPixmap pic(":/new/icon/images/film-reel.png");
+    QPixmap pic(":/new/icon/images/film-reel-long.png");
     ui->imageLabel->setPixmap(pic);
     ui->imageLabel->setScaledContents(true);
 
@@ -53,15 +53,17 @@ void MainWindow::on_movieTableView_clicked(const QModelIndex &index)
 
         QSqlQuery qry;
         // Get poster/image from database
-        if( !qry.exec( "SELECT poster FROM movies WHERE title='" + index.data().toString() + "';") )
+        qry.prepare("SELECT poster FROM movies WHERE title= :TITLE;");
+        qry.bindValue(":TITLE", index.data().toString());
+        if(!qry.exec())
             qDebug() << "Error getting poster:\n" << qry.lastError();
         qry.next();
-        QByteArray outByteArray = qry.value(0).toByteArray();
-        QPixmap outPixmap = QPixmap();
-        outPixmap.loadFromData( outByteArray );
+        //QByteArray outByteArray = qry.value(0).toByteArray();
+        QPixmap outPixmap = QPixmap(qry.value(0).toString());
+        //outPixmap.loadFromData( outByteArray );
 
         ui->imageLabel->setPixmap( outPixmap );
-        ui->imageLabel->setScaledContents(false);
+        ui->imageLabel->setScaledContents(true);
 
        }
     else {
@@ -140,8 +142,9 @@ void MainWindow::on_screenTableView_clicked(const QModelIndex &index)
         // Setup variables for button grid generation.
         QSignalMapper *signalMapper = new QSignalMapper(ui->seatGridLayout);
         QSqlQuery query;
-        query.exec("SELECT totalSeats FROM screens WHERE screenID='" + index.data().toString() + "';");
-
+        query.prepare("SELECT totalSeats FROM screens WHERE screenID= :SCREENID;");
+        query.bindValue(":SCREENID", index.data().toString());
+        query.exec();
         int rows = 0;
         int columns = 16;
 

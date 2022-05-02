@@ -38,22 +38,7 @@ void Database::connectDB(bool dbExists){
 void Database::createTables(){
     QSqlQuery query;
 
-    //convert images
-    QFile file(":/new/icon/images/batman.png");
-    QFile file2(":/new/icon/images/moonfall.png");
-    QFile file3(":/new/icon/images/psycho.png");
-    QFile file4(":/new/icon/images/interstellar.png");
-    QFile file5(":/new/icon/images/hftwp.png");
-        if (!file.open(QIODevice::ReadOnly)) return;
-        QByteArray inByteArray = file.readAll();
-        if (!file2.open(QIODevice::ReadOnly)) return;
-        QByteArray inByteArray2 = file2.readAll();
-        if (!file3.open(QIODevice::ReadOnly)) return;
-        QByteArray inByteArray3 = file3.readAll();
-        if (!file4.open(QIODevice::ReadOnly)) return;
-        QByteArray inByteArray4 = file4.readAll();
-        if (!file5.open(QIODevice::ReadOnly)) return;
-        QByteArray inByteArray5 = file5.readAll();
+
 
     query.exec("USE movieDB;");
 
@@ -75,16 +60,16 @@ void Database::createTables(){
 
     }
 
-    if (query.exec("CREATE TABLE IF NOT EXISTS movies (movieID int NOT NULL AUTO_INCREMENT, title VARCHAR(255), runtime VARCHAR(4), rating int(2), poster BLOB, PRIMARY KEY (movieID));")){
+    if (query.exec("CREATE TABLE IF NOT EXISTS movies (movieID int NOT NULL AUTO_INCREMENT, title VARCHAR(255), runtime VARCHAR(4), rating int(2), poster VARCHAR(255), PRIMARY KEY (movieID));")){
         qDebug() << "Table movies created!";
         query.exec("TRUNCATE TABLE movies");
         query.prepare("INSERT INTO movies (title, runtime, rating, poster) VALUES ('The Batman', '2:56', 15, :poster),('Moonfall', '2:10', 12, :poster2),('American Psycho', '1:42', 18, :poster3),('Interstellar', '2:49', 12, :poster4),('Hunt for the Wilderpeople', '1:40', 12, :poster5);");
         qDebug() << "Failed to insert movies: " << query.lastError().text();
-           query.bindValue( ":poster", inByteArray);
-           query.bindValue( ":poster2", inByteArray2);
-           query.bindValue( ":poster3", inByteArray3);
-           query.bindValue( ":poster4", inByteArray4);
-           query.bindValue( ":poster5", inByteArray5);
+           query.bindValue( ":poster", ":/new/icon/images/batman.png");
+           query.bindValue( ":poster2", ":/new/icon/images/moonfall.png");
+           query.bindValue( ":poster3", ":/new/icon/images/psycho.png");
+           query.bindValue( ":poster4", ":/new/icon/images/interstellar.png");
+           query.bindValue( ":poster5", ":/new/icon/images/hftwp.png");
            if( !query.exec() )
                qDebug() << "Error inserting image into table:\n" << query.lastError();
     }

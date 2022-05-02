@@ -6,6 +6,7 @@
         <file>images/interstellar.png</file>
         <file>images/moonfall.png</file>
         <file>images/batman.png</file>
+        <file>images/film-reel-long.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>
