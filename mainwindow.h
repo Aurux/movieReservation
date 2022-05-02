@@ -13,6 +13,8 @@
 #include <QPixmap>
 #include <QMessageBox>
 #include <QUuid>
+#include <QModelIndex>
+#include <QByteArray>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

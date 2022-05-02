@@ -13,14 +13,12 @@ MainWindow::MainWindow(QWidget *parent)
     movieModel->setHeaderData(1, Qt::Horizontal, tr("Runtime"));
     movieModel->setHeaderData(2, Qt::Horizontal, tr("Rating"));
 
-
     ui->movieTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->movieTableView->setColumnWidth((movieModel->columnCount() -1), 100);
     ui->movieTableView->setSelectionMode( QAbstractItemView::SingleSelection );
     ui->movieTableView->setModel(movieModel);
 
     qDebug() << "Current dir:" << QDir::currentPath();
-
 
     QPixmap pic(":/new/icon/images/film-reel.png");
     ui->imageLabel->setPixmap(pic);
@@ -32,11 +30,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-
-
-
-
 
 
 void MainWindow::on_movieTableView_clicked(const QModelIndex &index)
@@ -57,10 +50,24 @@ void MainWindow::on_movieTableView_clicked(const QModelIndex &index)
         ui->screenTableView->setModel(showTimeModel);
         ui->showingLabel->setEnabled(true);
         ui->screenTableView->setEnabled(true);
+
+        QSqlQuery qry;
+        // Get poster/image from database
+        if( !qry.exec( "SELECT poster FROM movies WHERE title='" + index.data().toString() + "';") )
+            qDebug() << "Error getting poster:\n" << qry.lastError();
+        qry.next();
+        QByteArray outByteArray = qry.value(0).toByteArray();
+        QPixmap outPixmap = QPixmap();
+        outPixmap.loadFromData( outByteArray );
+
+        ui->imageLabel->setPixmap( outPixmap );
+        ui->imageLabel->setScaledContents(false);
+
        }
     else {
         MainWindow::on_movieTableView_clicked(index.siblingAtColumn(0));
     }
+
 
 }
 

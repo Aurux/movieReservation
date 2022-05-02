@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 #include <QSqlQueryModel>
+#include <QByteArray>
+#include <QDir>
 
 class Database{
     public:

@@ -1,5 +1,11 @@
 <RCC>
     <qresource prefix="/new/icon">
         <file>images/film-reel.png</file>
+        <file>images/psycho.png</file>
+        <file>images/hftwp.png</file>
+        <file>images/interstellar.png</file>
+        <file>images/moonfall.png</file>
+        <file>images/batman.png</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>
