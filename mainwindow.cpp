@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "loginwindow.h"
 #include <QDir>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -29,6 +30,13 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_loginButton_clicked()
+{
+    loginWindow loginwindow;
+    loginwindow.setModal(true);
+    loginwindow.exec();
 }
 
 
@@ -222,6 +230,7 @@ void MainWindow::on_reserveButton_clicked()
 
     showtime.truncate(5);
     QMessageBox *popup = new QMessageBox(this);
+
     popup->setIconPixmap(QPixmap(":/new/icon/images/film-reel.png").scaled(128,128));
     popup->setText(QString::number(selectedSeats) + " seats reserved for \n" + movie + "\n"
                    + showtime +

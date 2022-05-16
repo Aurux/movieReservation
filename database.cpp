@@ -103,6 +103,18 @@ void Database::createTables(){
         qDebug() << "Table seats failed to create: " << query.lastError().text();
 
     }
+
+    if (query.exec("CREATE TABLE IF NOT EXISTS staff (staffid int NOT NULL AUTO_INCREMENT, PRIMARY KEY (staffid));")){
+        qDebug() << "Table staff created!";
+        query.exec("TRUNCATE TABLE staff");
+        query.exec("INSERT INTO staff (staffid) VALUES (10000), (10001), (10002)");
+
+    }
+    else {
+
+        qDebug() << "Table staff failed to create: " << query.lastError().text();
+
+    }
 }
 
 
