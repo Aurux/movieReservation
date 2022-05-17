@@ -37,10 +37,13 @@ private slots:
 
     void on_deleteShowtimeBtn_clicked();
 
+<<<<<<< HEAD
     void on_addMovieBtn_clicked();
 
     void on_addShowtimeBtn_clicked();
 
+=======
+>>>>>>> master
 private:
     QSignalMapper *signalMapper;
     Ui::StaffWindow *ui;

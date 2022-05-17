@@ -290,6 +290,7 @@
      </item>
     </layout>
    </widget>
+<<<<<<< HEAD
    <widget class="QPushButton" name="addShowtimeBtn">
     <property name="enabled">
      <bool>false</bool>
@@ -310,6 +311,16 @@
     </property>
     <property name="autoDefault">
      <bool>false</bool>
+=======
+   <widget class="QLabel" name="imageLabel">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>10</y>
+      <width>140</width>
+      <height>210</height>
+     </rect>
+>>>>>>> master
     </property>
     <property name="default">
      <bool>false</bool>
@@ -368,6 +379,48 @@
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="backBtn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>770</y>
+      <width>141</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Back to customer view</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteMovieBtn">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>220</y>
+      <width>91</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete Movie</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteShowtimeBtn">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>220</y>
+      <width>111</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete Showtime</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
