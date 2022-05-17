@@ -2,6 +2,7 @@
 #include "ui_loginwindow.h"
 #include "staffwindow.h"
 #include "database.h"
+#include "mainwindow.h"
 #include <QDir>
 
 loginWindow::loginWindow(QWidget *parent) :
@@ -33,8 +34,13 @@ void loginWindow::on_loginPushButton_clicked()
             QString staffIDfromDB = qry.value(0).toString();
 
             if(staffIDfromDB == staffIDtext){
-                staffWindow = new StaffWindow(this);
+                staffWindow = new StaffWindow(nullptr, staffIDfromDB.toInt());
                 staffWindow->show();
+                this->close();
+
+
+
+
             }else{
                 qDebug() << "failed to login:\n" << qry.lastError();
             }
