@@ -34,10 +34,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_loginButton_clicked()
 {
-    loginWindow loginwindow;
-    loginwindow.setModal(true);
-    loginwindow.exec();
+    loginWindow *loginwindow = new loginWindow;
+    loginwindow->setModal(true);
+    loginwindow->exec();
+    this->close();
+
 }
+
 
 
 void MainWindow::on_movieTableView_clicked(const QModelIndex &index)
@@ -247,4 +250,6 @@ void MainWindow::on_reserveButton_clicked()
     QList<QModelIndex> index = ui->screenTableView->selectionModel()->selectedIndexes();
     MainWindow::on_screenTableView_clicked(index[0]);
 }
+
+
 

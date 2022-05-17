@@ -270,4 +270,7 @@
   <include location="icon.qrc"/>
  </resources>
  <connections/>
+ <slots>
+  <slot>hideWindow()</slot>
+ </slots>
 </ui>

@@ -1,12 +1,14 @@
 #include "staffwindow.h"
 #include "ui_staffwindow.h"
+#include "mainwindow.h"
 #include <QDir>
-StaffWindow::StaffWindow(QWidget *parent)
+StaffWindow::StaffWindow(QWidget *parent, int staffID)
     : QMainWindow(parent)
     , ui(new Ui::StaffWindow)
 {
     ui->setupUi(this);
-    StaffWindow::setWindowTitle("Movie Reservation");
+    QString windowTitle = "Movie Reservation - Staff ID: " + QString::number(staffID);
+    StaffWindow::setWindowTitle(windowTitle);
     QSqlQueryModel *movieModel = new QSqlQueryModel();
     movieModel->setQuery("SELECT title, runtime, rating FROM movies;");
     movieModel->setHeaderData(0, Qt::Horizontal, tr("Movie"));
@@ -50,6 +52,7 @@ void StaffWindow::on_movieTableView_clicked(const QModelIndex &index)
         ui->screenTableView->setModel(showTimeModel);
         ui->showingLabel->setEnabled(true);
         ui->screenTableView->setEnabled(true);
+        ui->deleteShowtimeBtn->setEnabled(true);
 
         QSqlQuery qry;
         // Get poster/image from database
@@ -87,6 +90,68 @@ void clear(QLayout *layout) {
            delete item->widget();
         }
         delete item;
+    }
+}
+
+
+void StaffWindow::on_backBtn_clicked()
+{
+
+    MainWindow *w = new MainWindow;
+    w->show();
+    this->close();
+}
+
+
+void StaffWindow::on_deleteMovieBtn_clicked()
+{
+    QString movie = ui->movieTableView->selectionModel()->selectedRows().at(0).data().toString();
+
+    qDebug() << "Movie to be deleted: " + movie;
+
+    QSqlQuery query;
+    query.prepare("DELETE FROM movies WHERE title= :TITLE;");
+    query.bindValue(":TITLE",movie);
+    if (query.exec()){
+        qDebug() << movie + " deleted successfully!";
+        QSqlQueryModel *movieModel = new QSqlQueryModel();
+        movieModel->setQuery("SELECT title, runtime, rating FROM movies;");
+        ui->movieTableView->setModel(movieModel);
+        ui->screenTableView->setModel(NULL);
+        ui->showingLabel->setText("Showtimes");
+        QPixmap pic(":/new/icon/images/film-reel-long.png");
+        ui->imageLabel->setPixmap(pic);
+        ui->showingLabel->setEnabled(false);
+        ui->screenTableView->setEnabled(false);
+        ui->deleteShowtimeBtn->setEnabled(false);
+    }
+    else qDebug() << "Movie failed to delete.";
+
+
+
+}
+
+
+void StaffWindow::on_deleteShowtimeBtn_clicked()
+{
+    QString showtime = ui->screenTableView->selectionModel()->selectedRows().at(0).siblingAtColumn(1).data().toString();
+    int screenID = ui->screenTableView->selectionModel()->selectedRows().at(0).data().toInt();
+
+    QSqlQuery query;
+    query.prepare("SET foreign_key_checks = 0; DELETE FROM showtimes WHERE screenID= :SCREENID AND showtime= :SHOWTIME;");
+    query.bindValue(":SCREENID", screenID);
+    query.bindValue(":SHOWTIME", showtime);
+    if (query.exec()){
+        QString query;
+        query = "SELECT screenID, showtime FROM showtimes WHERE title='" + ui->movieTableView->selectionModel()->selectedRows().at(0).data().toString() + "';";
+        qDebug() << query;
+        QSqlQueryModel * showTimeModel = new QSqlQueryModel();
+        showTimeModel->setQuery(query);
+        ui->screenTableView->setModel(showTimeModel);
+    }
+    else {
+        qDebug() << "Showtime failed to delete.";
+        qDebug() << query.lastError();
     }
 }
 

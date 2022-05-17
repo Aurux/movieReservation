@@ -19,6 +19,8 @@ public:
 private slots:
 
     void on_loginPushButton_clicked();
+signals:
+    void mainConnect();
 
 private:
     Ui::loginWindow *ui;

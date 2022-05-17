@@ -164,37 +164,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="gridLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>230</y>
-      <width>761</width>
-      <height>511</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="seatGridLayout">
-     <property name="horizontalSpacing">
-      <number>2</number>
-     </property>
-    </layout>
-   </widget>
-   <widget class="QLabel" name="seatLabel">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>220</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Screen:</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="imageLabel">
     <property name="geometry">
      <rect>
@@ -239,6 +208,48 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="backBtn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>770</y>
+      <width>141</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Back to customer view</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteMovieBtn">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>220</y>
+      <width>91</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete Movie</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteShowtimeBtn">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>220</y>
+      <width>111</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete Showtime</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
