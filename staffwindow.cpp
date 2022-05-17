@@ -53,11 +53,14 @@ void StaffWindow::on_movieTableView_clicked(const QModelIndex &index)
         ui->showingLabel->setEnabled(true);
         ui->screenTableView->setEnabled(true);
         ui->deleteShowtimeBtn->setEnabled(true);
+<<<<<<< HEAD
         ui->addShowtimeBtn->setEnabled(true);
         ui->screenLabel->setEnabled(true);
         ui->screenIDText->setEnabled(true);
         ui->showtimeLabel->setEnabled(true);
         ui->showtimeText->setEnabled(true);
+=======
+>>>>>>> master
 
         QSqlQuery qry;
         // Get poster/image from database
@@ -129,12 +132,15 @@ void StaffWindow::on_deleteMovieBtn_clicked()
         ui->showingLabel->setEnabled(false);
         ui->screenTableView->setEnabled(false);
         ui->deleteShowtimeBtn->setEnabled(false);
+<<<<<<< HEAD
         ui->addShowtimeBtn->setEnabled(false);
         ui->screenLabel->setEnabled(false);
         ui->screenIDText->setEnabled(false);
         ui->showtimeLabel->setEnabled(false);
         ui->showtimeText->setEnabled(false);
 
+=======
+>>>>>>> master
     }
     else qDebug() << "Movie failed to delete.";
 
@@ -166,6 +172,7 @@ void StaffWindow::on_deleteShowtimeBtn_clicked()
     }
 }
 
+<<<<<<< HEAD
 
 void StaffWindow::on_addMovieBtn_clicked()
 {
@@ -222,3 +229,5 @@ void StaffWindow::on_addShowtimeBtn_clicked()
          qDebug() << "Showtime failed to add.";
 }
 
+=======
+>>>>>>> master
