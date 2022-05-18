@@ -214,7 +214,6 @@ void MainWindow::on_screenTableView_clicked(const QModelIndex &index)
 }
 
 
-int checkoutID = 1;
 void MainWindow::on_reserveButton_clicked()
 {
     QString movie = ui->movieTableView->selectionModel()->selectedRows().at(0).data().toString();
@@ -222,6 +221,7 @@ void MainWindow::on_reserveButton_clicked()
     QString showtime = ui->screenTableView->selectionModel()->selectedRows().at(0).siblingAtColumn(1).data().toString();
 
     QSqlQuery query;
+    QString seatListStr;
     for (int i = 0; i < selectedSeatNumbers.size(); i++){
         query.prepare("INSERT INTO seats (seatName, reserved, showtimeID) VALUES (:SEAT, 1, (SELECT id FROM showtimes WHERE title = :MOVIE AND showtime = :SHOWTIME));");
         query.bindValue(":SEAT", selectedSeatNumbers[i]);
@@ -229,23 +229,37 @@ void MainWindow::on_reserveButton_clicked()
         query.bindValue(":SHOWTIME", showtime);
         query.exec();
         qDebug() << query.lastQuery();
+
+        seatListStr += selectedSeatNumbers[i];
+        if (i<selectedSeatNumbers.size()-1){
+            seatListStr += ",";
+        }
     }
 
-    showtime.truncate(5);
-    QMessageBox *popup = new QMessageBox(this);
 
+
+    query.prepare("INSERT INTO orders (title, screenID, seats, showtime) VALUES (:TITLE, :SCREENID, :SEATS, :SHOWTIME);");
+    query.bindValue(":TITLE", movie);
+    query.bindValue(":SCREENID", screenID);
+    query.bindValue(":SEATS",seatListStr);
+    query.bindValue(":SHOWTIME",showtime);
+    query.exec();
+    int orderID = query.lastInsertId().toInt();
+
+    QMessageBox *popup = new QMessageBox(this);
+    showtime.truncate(5);
     popup->setIconPixmap(QPixmap(":/new/icon/images/film-reel.png").scaled(128,128));
     popup->setText(QString::number(selectedSeats) + " seats reserved for \n" + movie + "\n"
                    + showtime +
                    " on screen " + QString::number(screenID) +
-                   "\n\nOrder number: " + QString::number(checkoutID));
+                   "\n\nOrder number: " + QString::number(orderID));
     popup->setWindowTitle("Movie Reservation");
     popup->show();
 
     qDebug() << "Movie:" << movie << "Screen:" << screenID << "Showtime:" << showtime;
     qDebug() << "Selected seats:" << selectedSeatNumbers;
 
-    checkoutID++;
+
 
     QList<QModelIndex> index = ui->screenTableView->selectionModel()->selectedIndexes();
     MainWindow::on_screenTableView_clicked(index[0]);

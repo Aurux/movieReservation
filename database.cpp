@@ -60,7 +60,7 @@ void Database::createTables(){
 
     }
 
-    if (query.exec("CREATE TABLE IF NOT EXISTS movies (movieID int NOT NULL AUTO_INCREMENT, title VARCHAR(255), runtime VARCHAR(4), rating int(2), poster VARCHAR(255), PRIMARY KEY (movieID));")){
+    if (query.exec("CREATE TABLE IF NOT EXISTS movies (movieID int NOT NULL AUTO_INCREMENT, title VARCHAR(255), runtime VARCHAR(4), rating VARCHAR(3), poster VARCHAR(255), PRIMARY KEY (movieID));")){
         qDebug() << "Table movies created!";
         query.exec("TRUNCATE TABLE movies");
         query.prepare("INSERT INTO movies (title, runtime, rating, poster) VALUES ('The Batman', '2:56', 15, :poster),('Moonfall', '2:10', 12, :poster2),('American Psycho', '1:42', 18, :poster3),('Interstellar', '2:49', 12, :poster4),('Hunt for the Wilderpeople', '1:40', 12, :poster5);");
@@ -113,6 +113,15 @@ void Database::createTables(){
     else {
 
         qDebug() << "Table staff failed to create: " << query.lastError().text();
+
+    }
+    if (query.exec("CREATE TABLE IF NOT EXISTS orders (orderid int NOT NULL AUTO_INCREMENT, title VARCHAR(255), screenID int, showtime TIME, seats VARCHAR(255), PRIMARY KEY (orderid));")){
+        qDebug() << "Table orders created!";
+
+    }
+    else {
+
+        qDebug() << "Table orders failed to create: " << query.lastError().text();
 
     }
 }
