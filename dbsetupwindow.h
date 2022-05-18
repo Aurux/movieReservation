@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "database.h"
+#include "qabstractbutton.h"
 namespace Ui {
 class DBSetupWindow;
 }
@@ -22,7 +23,18 @@ private slots:
 
     void on_buttonBox_accepted();
 
-    void on_buttonBox_rejected();
+
+
+    void on_exampleDataBtn_clicked();
+
+
+    void on_buttonBox_2_clicked(QAbstractButton *button);
+
+    void on_passInput_textChanged(const QString &arg1);
+
+    void on_userInput_textChanged(const QString &arg1);
+
+    void on_hostInput_textChanged(const QString &arg1);
 
 private:
     Ui::DBSetupWindow *ui;
