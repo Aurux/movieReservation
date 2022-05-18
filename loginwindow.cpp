@@ -46,6 +46,8 @@ void loginWindow::on_loginPushButton_clicked()
             }
 
         }
+        ui->loginLabel->setText("Failed to login with given ID.");
+        ui->loginLabel->adjustSize();
 
     }
 

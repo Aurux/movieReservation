@@ -13,41 +13,45 @@
   <property name="windowTitle">
    <string>Staff login</string>
   </property>
-  <widget class="QPushButton" name="loginPushButton">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>110</y>
-     <width>51</width>
-     <height>23</height>
+     <x>50</x>
+     <y>40</y>
+     <width>231</width>
+     <height>101</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Login</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineText_ID">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>110</y>
-     <width>113</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>90</y>
-     <width>58</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Enter ID</string>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Enter ID</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLineEdit" name="lineText_ID"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="loginPushButton">
+        <property name="text">
+         <string>Login</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="loginLabel">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
