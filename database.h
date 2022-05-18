@@ -13,8 +13,8 @@
 
 class Database{
     public:
-        void connectDB(bool dbExists);
-        void createTables();
+        bool connectDB(QString hostname, QString username, QString password);
+        bool createTables();
 };
 
 

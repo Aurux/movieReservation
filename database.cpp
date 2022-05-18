@@ -3,42 +3,35 @@
 
 
 
-void Database::connectDB(bool dbExists){
-    if (dbExists){
-        QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-        db.setHostName("localhost");
-        db.setDatabaseName("movieDB");
-        db.setUserName("root");
-        db.setPassword("traffic-surprise-pungent");
+bool Database::connectDB(QString hostname, QString username, QString password){
 
-        if(db.open()){
-            qDebug() << "Connected to: " << db.databaseName();
-        }
-    }
-    else {
         QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-        db.setHostName("localhost");
+        db.setHostName(hostname);
 
-        db.setUserName("root");
-        db.setPassword("traffic-surprise-pungent");
+        db.setUserName(username);
+        db.setPassword(password);
 
 
         if (db.open()){
             qDebug() << "Connected to DB: " << db.hostName();
             QSqlQuery query;
-            query.exec("CREATE DATABASE movieDB;");
-            if(query.exec()) {
-                query.exec("USE movieDB;");
-            }
+            query.exec("USE movieDB;");
+            return true;
+
+
         }
-        else qDebug() << "Failed to connect: " << db.lastError().text();
-    }
+        else {
+            qDebug() << "Failed to connect: " << db.lastError().text();
+            return false;
+        }
+
 
 }
-void Database::createTables(){
+bool Database::createTables(){
+    bool success = true;
     QSqlQuery query;
 
-
+    query.exec("CREATE DATABASE movieDB;");
 
     query.exec("USE movieDB;");
 
@@ -57,6 +50,7 @@ void Database::createTables(){
     else {
 
         qDebug() << "Table screens failed to create: " << query.lastError().text();
+        success = false;
 
     }
 
@@ -76,6 +70,7 @@ void Database::createTables(){
     else {
 
         qDebug() << "Table movies failed to create: " << query.lastError().text();
+        success = false;
 
     }
 
@@ -89,6 +84,7 @@ void Database::createTables(){
     else {
 
         qDebug() << "Table movieScreen failed to create: " << query.lastError().text();
+        success = false;
 
     }
 
@@ -101,6 +97,7 @@ void Database::createTables(){
     else {
 
         qDebug() << "Table seats failed to create: " << query.lastError().text();
+        success = false;
 
     }
 
@@ -113,6 +110,7 @@ void Database::createTables(){
     else {
 
         qDebug() << "Table staff failed to create: " << query.lastError().text();
+        success = false;
 
     }
     if (query.exec("CREATE TABLE IF NOT EXISTS orders (orderid int NOT NULL AUTO_INCREMENT, title VARCHAR(255), screenID int, showtime TIME, seats VARCHAR(255), PRIMARY KEY (orderid));")){
@@ -122,8 +120,10 @@ void Database::createTables(){
     else {
 
         qDebug() << "Table orders failed to create: " << query.lastError().text();
+        success = false;
 
     }
+    return success;
 }
 
 

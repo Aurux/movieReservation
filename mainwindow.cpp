@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QSqlDatabase::database();
     MainWindow::setWindowTitle("Movie Reservation");
     QSqlQueryModel *movieModel = new QSqlQueryModel();
     movieModel->setQuery("SELECT title, runtime, rating FROM movies;");
