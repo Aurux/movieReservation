@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>850</height>
+    <height>598</height>
    </rect>
   </property>
   <property name="palette">
@@ -107,7 +107,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>770</y>
+      <y>520</y>
       <width>141</width>
       <height>23</height>
      </rect>
@@ -145,70 +145,12 @@
      <string>Delete Showtime</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="screenIDText">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>320</y>
-      <width>144</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="showtimeText">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>360</y>
-      <width>125</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="showtimeLabel">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>360</y>
-      <width>71</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Showtime :</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="screenLabel">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>320</y>
-      <width>51</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Screen :</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="addMovieBtn">
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>410</y>
-      <width>80</width>
+      <y>420</y>
+      <width>111</width>
       <height>23</height>
      </rect>
     </property>
@@ -297,7 +239,7 @@
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>410</y>
+      <y>370</y>
       <width>111</width>
       <height>23</height>
      </rect>
@@ -315,13 +257,13 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>320</y>
-      <width>205</width>
-      <height>81</height>
+      <x>60</x>
+      <y>290</y>
+      <width>241</width>
+      <height>121</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -368,6 +310,55 @@
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QSplitter" name="splitter_3">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>300</y>
+      <width>191</width>
+      <height>48</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <widget class="QSplitter" name="splitter_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QLabel" name="screenLabel">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Screen :</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="screenIDText">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QLabel" name="showtimeLabel">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Showtime :</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="showtimeText">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
