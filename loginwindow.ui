@@ -13,7 +13,11 @@
   <property name="windowTitle">
    <string>Staff login</string>
   </property>
-  <widget class="QWidget" name="">
+  <property name="windowIcon">
+   <iconset resource="icon.qrc">
+    <normaloff>:/new/icon/images/film-reel.png</normaloff>:/new/icon/images/film-reel.png</iconset>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -54,7 +58,9 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="icon.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <signal>mainConnect()</signal>
