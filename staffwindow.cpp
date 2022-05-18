@@ -48,16 +48,15 @@ void StaffWindow::on_movieTableView_clicked(const QModelIndex &index)
 
         ui->showingLabel->setText("Showtimes for: " + index.data().toString());
         ui->showingLabel->adjustSize();
-        ui->verticalLayout_2->addStretch(1);
         ui->screenTableView->setModel(showTimeModel);
         ui->showingLabel->setEnabled(true);
         ui->screenTableView->setEnabled(true);
         ui->deleteShowtimeBtn->setEnabled(true);
         ui->addShowtimeBtn->setEnabled(true);
         ui->screenLabel->setEnabled(true);
-        ui->screenIDText->setEnabled(true);
+        ui->spinBox->setEnabled(true);
         ui->showtimeLabel->setEnabled(true);
-        ui->showtimeText->setEnabled(true);
+        ui->timeEdit->setEnabled(true);
 
         QSqlQuery qry;
         // Get poster/image from database
@@ -131,9 +130,9 @@ void StaffWindow::on_deleteMovieBtn_clicked()
         ui->deleteShowtimeBtn->setEnabled(false);
         ui->addShowtimeBtn->setEnabled(false);
         ui->screenLabel->setEnabled(false);
-        ui->screenIDText->setEnabled(false);
+        ui->spinBox->setEnabled(false);
         ui->showtimeLabel->setEnabled(false);
-        ui->showtimeText->setEnabled(false);
+        ui->timeEdit->setEnabled(false);
 
     }
     else qDebug() << "Movie failed to delete.";
@@ -196,16 +195,17 @@ void StaffWindow::on_addShowtimeBtn_clicked()
 {
     QString movie = ui->movieTableView->selectionModel()->selectedRows().at(0).data().toString();
 
-    QString screen;
-    QString showtime;
+    int screenID;
+    QTime showtime;
 
-    showtime=ui->showtimeText->text();
-    screen=ui->screenIDText->text();
+    showtime=ui->timeEdit->time();
+    qDebug() << ui->timeEdit->time().toString();
+    screenID=ui->spinBox->value();
 
     QSqlQuery query;
     query.prepare("INSERT INTO showtimes (screenID, showtime, title) VALUES (:SCREEN, :SHOWTIME, :MOVIE)");
     query.bindValue(":SHOWTIME", showtime);
-    query.bindValue(":SCREEN", screen);
+    query.bindValue(":SCREEN", screenID);
     query.bindValue(":MOVIE", movie);
 
     if (query.exec()){
