@@ -15,6 +15,7 @@ class Database{
     public:
         bool connectDB(QString hostname, QString username, QString password);
         bool createTables();
+        bool addExamples();
 };
 
 

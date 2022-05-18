@@ -8,6 +8,7 @@ DBSetupWindow::DBSetupWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle("Movie Reservation - Connect to Database");
+
 }
 
 DBSetupWindow::~DBSetupWindow()
@@ -26,10 +27,14 @@ void DBSetupWindow::on_testConnBtn_clicked()
         ui->statusLabel->setText("Database connection successful!");
         ui->statusLabel->adjustSize();
         ui->createDBBtn->setEnabled(true);
+        ui->exampleDataBtn->setEnabled(true);
+
     }
     else {
         ui->statusLabel->setText("Database connection failed.");
         ui->statusLabel->adjustSize();
+        ui->createDBBtn->setEnabled(false);
+        ui->exampleDataBtn->setEnabled(false);
     }
 }
 
@@ -51,16 +56,56 @@ void DBSetupWindow::on_createDBBtn_clicked()
     }
 }
 
+void DBSetupWindow::on_exampleDataBtn_clicked()
+{
+    bool exampleSuccess = db.addExamples();
+
+    if (exampleSuccess){
+        ui->statusLabel->setText("Example data successfully added!");
+        ui->statusLabel->adjustSize();
+    }
+    else {
+        ui->statusLabel->setText("Failed to add example data.");
+        ui->statusLabel->adjustSize();
+    }
+}
+
 
 void DBSetupWindow::on_buttonBox_accepted()
 {
+    on_testConnBtn_clicked();
     MainWindow *w = new MainWindow;
     w->show();
 }
 
 
-void DBSetupWindow::on_buttonBox_rejected()
+
+void DBSetupWindow::on_buttonBox_2_clicked(QAbstractButton *button)
 {
-    QApplication::quit();
+    ui->hostInput->clear();
+    ui->userInput->clear();
+    ui->passInput->clear();
+    ui->testConnBtn->setEnabled(false);
+    ui->createDBBtn->setEnabled(false);
+    ui->exampleDataBtn->setEnabled(false);
+    ui->statusLabel->setText("");
+}
+
+
+void DBSetupWindow::on_passInput_textChanged(const QString &arg1)
+{
+    ui->testConnBtn->setEnabled(true);
+}
+
+
+void DBSetupWindow::on_userInput_textChanged(const QString &arg1)
+{
+    ui->testConnBtn->setEnabled(true);
+}
+
+
+void DBSetupWindow::on_hostInput_textChanged(const QString &arg1)
+{
+    ui->testConnBtn->setEnabled(true);
 }
 
