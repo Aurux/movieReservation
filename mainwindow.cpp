@@ -13,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
     movieModel->setHeaderData(0, Qt::Horizontal, tr("Movie"));
     movieModel->setHeaderData(1, Qt::Horizontal, tr("Runtime"));
     movieModel->setHeaderData(2, Qt::Horizontal, tr("Rating"));
-
     ui->movieTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->movieTableView->setColumnWidth((movieModel->columnCount() -1), 100);
     ui->movieTableView->setSelectionMode( QAbstractItemView::SingleSelection );
@@ -69,12 +68,18 @@ void MainWindow::on_movieTableView_clicked(const QModelIndex &index)
         if(!qry.exec())
             qDebug() << "Error getting poster:\n" << qry.lastError();
         qry.next();
-        //QByteArray outByteArray = qry.value(0).toByteArray();
-        QPixmap outPixmap = QPixmap(qry.value(0).toString());
-        //outPixmap.loadFromData( outByteArray );
+        if(qry.value(0).toString() != ""){
+            //QByteArray outByteArray = qry.value(0).toByteArray();
+            QPixmap outPixmap = QPixmap(qry.value(0).toString());
+            //outPixmap.loadFromData( outByteArray );
 
-        ui->imageLabel->setPixmap( outPixmap );
-        ui->imageLabel->setScaledContents(true);
+            ui->imageLabel->setPixmap( outPixmap );
+            ui->imageLabel->setScaledContents(true);
+        }
+        else {
+            ui->imageLabel->setText("No poster found.");
+        }
+
 
        }
     else {
