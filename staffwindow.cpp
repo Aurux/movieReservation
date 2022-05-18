@@ -194,7 +194,6 @@ void StaffWindow::on_addMovieBtn_clicked()
 
 void StaffWindow::on_addShowtimeBtn_clicked()
 {
-    QString showtimes = ui->screenTableView->selectionModel()->selectedRows().at(0).siblingAtColumn(1).data().toString();
     QString movie = ui->movieTableView->selectionModel()->selectedRows().at(0).data().toString();
 
     QString screen;
@@ -204,11 +203,11 @@ void StaffWindow::on_addShowtimeBtn_clicked()
     screen=ui->screenIDText->text();
 
     QSqlQuery query;
-    query.prepare("INSERT INTO showtimes (screenID, showtime, movie) VALUES(:SCREEN, :SHOWTIME, :MOVIE) WHERE showtime = :SHOWTIMES;");
+    query.prepare("INSERT INTO showtimes (screenID, showtime, title) VALUES (:SCREEN, :SHOWTIME, :MOVIE)");
     query.bindValue(":SHOWTIME", showtime);
     query.bindValue(":SCREEN", screen);
-    query.bindValue(":SHOWTIMES", showtimes);
     query.bindValue(":MOVIE", movie);
+
     if (query.exec()){
         QString query;
         query = "SELECT screenID, showtime FROM showtimes WHERE title='" + ui->movieTableView->selectionModel()->selectedRows().at(0).data().toString() + "';";
@@ -217,7 +216,9 @@ void StaffWindow::on_addShowtimeBtn_clicked()
         showTimeModel->setQuery(query);
         ui->screenTableView->setModel(showTimeModel);
     }
-    else qDebug() << query.lastError();
-         qDebug() << "Showtime failed to add.";
+    else {
+        qDebug() << query.lastError();
+        qDebug() << "Showtime failed to add.";
+    }
 }
 
