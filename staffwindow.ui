@@ -24,6 +24,12 @@
    <iconset resource="icon.qrc">
     <normaloff>:/new/icon/images/film-reel.png</normaloff>:/new/icon/images/film-reel.png</iconset>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
@@ -106,8 +112,8 @@
    <widget class="QPushButton" name="backBtn">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>520</y>
+      <x>30</x>
+      <y>540</y>
       <width>141</width>
       <height>23</height>
      </rect>
@@ -238,8 +244,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>370</y>
+      <x>460</x>
+      <y>420</y>
       <width>111</width>
       <height>23</height>
      </rect>
@@ -311,54 +317,57 @@
      </item>
     </layout>
    </widget>
-   <widget class="QSplitter" name="splitter_3">
+   <widget class="QGroupBox" name="">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>300</y>
-      <width>191</width>
-      <height>48</height>
+      <x>420</x>
+      <y>290</y>
+      <width>193</width>
+      <height>121</height>
      </rect>
     </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
-    </property>
-    <widget class="QSplitter" name="splitter_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <widget class="QLabel" name="screenLabel">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>Screen :</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="screenIDText">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QSplitter" name="splitter">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <widget class="QLabel" name="showtimeLabel">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>Showtime :</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="showtimeText">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QSplitter" name="splitter">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <widget class="QLabel" name="screenLabel">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Screen :</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="screenIDText">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSplitter" name="splitter_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <widget class="QLabel" name="showtimeLabel">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Showtime :</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="showtimeText">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
