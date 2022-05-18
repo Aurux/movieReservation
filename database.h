@@ -16,6 +16,7 @@ class Database{
         bool connectDB(QString hostname, QString username, QString password);
         bool createTables();
         bool addExamples();
+        bool deleteDB();
 };
 
 

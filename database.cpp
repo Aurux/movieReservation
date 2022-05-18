@@ -143,4 +143,12 @@ bool Database::addExamples(){
 
 }
 
+bool Database::deleteDB(){
+    QSqlQuery query;
+    if (query.exec("DROP DATABASE movieDB;")){
+        return true;
+    }
+    else return false;
+}
+
 

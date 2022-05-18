@@ -28,7 +28,8 @@ void DBSetupWindow::on_testConnBtn_clicked()
         ui->statusLabel->adjustSize();
         ui->createDBBtn->setEnabled(true);
         ui->exampleDataBtn->setEnabled(true);
-
+        ui->clearDBBtn->setEnabled(true);
+        ui->buttonBox->setEnabled(true);
     }
     else {
         ui->statusLabel->setText("Database connection failed.");
@@ -88,6 +89,8 @@ void DBSetupWindow::on_buttonBox_2_clicked(QAbstractButton *button)
     ui->testConnBtn->setEnabled(false);
     ui->createDBBtn->setEnabled(false);
     ui->exampleDataBtn->setEnabled(false);
+    ui->clearDBBtn->setEnabled(false);
+    ui->buttonBox->setEnabled(false);
     ui->statusLabel->setText("");
 }
 
@@ -107,5 +110,25 @@ void DBSetupWindow::on_userInput_textChanged(const QString &arg1)
 void DBSetupWindow::on_hostInput_textChanged(const QString &arg1)
 {
     ui->testConnBtn->setEnabled(true);
+}
+
+
+
+
+
+void DBSetupWindow::on_clearDBBtn_clicked()
+{
+    bool success = db.deleteDB();
+
+    if (success){
+        ui->statusLabel->setText("Database deleted successfully.");
+        ui->createDBBtn->setEnabled(false);
+        ui->exampleDataBtn->setEnabled(false);
+        ui->clearDBBtn->setEnabled(false);
+        ui->buttonBox->setEnabled(false);
+    }
+    else {
+        ui->statusLabel->setText("Failed to delete database.");
+    }
 }
 

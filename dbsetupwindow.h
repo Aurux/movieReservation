@@ -36,6 +36,10 @@ private slots:
 
     void on_hostInput_textChanged(const QString &arg1);
 
+
+
+    void on_clearDBBtn_clicked();
+
 private:
     Ui::DBSetupWindow *ui;
 };
