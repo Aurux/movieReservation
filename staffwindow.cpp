@@ -26,6 +26,18 @@ StaffWindow::StaffWindow(QWidget *parent, int staffID)
     ui->imageLabel->setPixmap(pic);
     ui->imageLabel->setScaledContents(true);
 
+    QSqlQueryModel *orderModel = new QSqlQueryModel();
+    orderModel->setQuery("SELECT * FROM orders;");
+    orderModel->setHeaderData(0, Qt::Horizontal, tr("Order ID"));
+    orderModel->setHeaderData(1, Qt::Horizontal, tr("Movie"));
+    orderModel->setHeaderData(2, Qt::Horizontal, tr("Screen"));
+    orderModel->setHeaderData(3, Qt::Horizontal, tr("Showtime"));
+    orderModel->setHeaderData(4, Qt::Horizontal, tr("Seats"));
+
+    ui->resTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->resTable->setColumnWidth((orderModel->columnCount() -1), 100);
+    ui->resTable->setModel(orderModel);
+
 }
 
 StaffWindow::~StaffWindow()
